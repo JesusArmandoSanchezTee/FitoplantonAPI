@@ -13,7 +13,6 @@
         "packagesPath": "C:\\Users\\jesus\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\jesus\\RiderProjects\\FitoplantonAPI\\Domain\\obj\\",
         "projectStyle": "PackageReference",
-        "UsingMicrosoftNETSdk": false,
         "fallbackFolders": [
           "C:\\Program Files\\DevExpress 23.1\\Components\\Offline Packages",
           "C:\\Program Files\\DevExpress 24.1\\Components\\Offline Packages",
@@ -60,6 +59,10 @@
             "MediatR": {
               "target": "Package",
               "version": "[12.5.0, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.17, )"
             }
           },
           "imports": [

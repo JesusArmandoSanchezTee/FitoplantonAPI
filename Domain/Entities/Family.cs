@@ -1,9 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Domain.Contracts;
 
 namespace Domain.Entities;
 
-public class Family
+public class Family : AuditableBaseEntry
 {
     [Key]
     public int Id { get; set; }

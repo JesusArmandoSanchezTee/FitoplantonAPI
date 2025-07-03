@@ -1,8 +1,9 @@
 using System.ComponentModel.DataAnnotations;
+using Domain.Contracts;
 
 namespace Domain.Entities;
 
-public class Species
+public class Species : AuditableBaseEntry
 {
     [Key]
     public int Id { get; set; }
