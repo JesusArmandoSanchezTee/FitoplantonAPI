@@ -1,21 +1,12 @@
-using FluentValidation.Results;
+using System.Net;
+using ApplicationCore.Exceptions;
 
 namespace Application.Exceptions;
 
-public class ValidationException : Exception
+public class ValidationException : CustomException
 {
-    public ValidationException() : base("Se han producido uno o mas errores de validacion.")
+    public ValidationException(string message, List<string>? errors = default)
+        : base(message, errors, HttpStatusCode.BadRequest)
     {
-        Errors = new List<string>();
-    }
-    
-    public List<string> Errors { get; set; }
-
-    public ValidationException(IEnumerable<ValidationFailure> failures) : this()
-    {
-        foreach (var failure in failures)
-        {
-            Errors.Add(failure.ErrorMessage);
-        }
     }
 }
