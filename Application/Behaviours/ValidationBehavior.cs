@@ -19,9 +19,17 @@ public class ValidationBehavior <TRequest, TResponse> : IPipelineBehavior<TReque
             var context = new FluentValidation.ValidationContext<TRequest>(request);    
             var validationResults = await Task.WhenAll(_validators.Select(v => v.ValidateAsync(context, cancellationToken)));
             var failures = validationResults.SelectMany(v => v.Errors).Where(f => f != null).ToList();
-            if (failures.Any())
+            if (failures.Count != 0)
             {
-                throw new ValidationException(failures);
+                var mensajes = failures
+                    .Select(f => f.ErrorMessage)
+                    .ToList();
+
+                // Lanzamos tu ValidationException existente
+                throw new Exceptions.ValidationException(
+                    message: "Errores de validación",
+                    errors: mensajes
+                );
             }
         }
         

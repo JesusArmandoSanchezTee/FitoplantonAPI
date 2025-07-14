@@ -28,7 +28,7 @@
 
     <ItemGroup>
       <Folder Include="DTOs\" />
-      <Folder Include="Features\Querys\" />
+      <Folder Include="Features\SpeciesFeature\Commands\Create\" />
     </ItemGroup>
 
 </Project>

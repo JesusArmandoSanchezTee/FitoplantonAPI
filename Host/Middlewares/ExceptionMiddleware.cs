@@ -1,7 +1,8 @@
 using System.Net;
 using System.Text.Json;
-using ApplicationCore.Exceptions;
-using Infraestructure.Middleware;
+using Application.Exceptions;
+using Microsoft.EntityFrameworkCore;
+using MySqlConnector;
 
 namespace Host.Middlewares;
 
@@ -16,6 +17,7 @@ internal class ExceptionMiddleware : IMiddleware
         catch(OperationCanceledException) { }
         catch (Exception exception)
         {
+            // 1) Generas tu ErrorResult
             string errorId = Guid.NewGuid().ToString();
             var errorResult = new ErrorResult
             {
@@ -26,6 +28,8 @@ internal class ExceptionMiddleware : IMiddleware
             errorResult.Messages!.Add(exception.Message);
             var response = context.Response;
             response.ContentType = "application/json";
+            
+            // 2) Si no es CustomException, baja hasta la excepción raíz
             if (exception is not CustomException && exception.InnerException != null)
             {
                 while (exception.InnerException != null)
@@ -34,24 +38,35 @@ internal class ExceptionMiddleware : IMiddleware
                 }
             }
 
-            switch (exception)
+            // 3) Manejo explícito de MySQL caído
+            if (exception is MySqlException
+                || (exception is DbUpdateException dbEx && dbEx.InnerException is MySqlException))
             {
-                case CustomException e:
-                    response.StatusCode = errorResult.StatusCode = (int)e.StatusCode;
-                    if (e.ErrorMessages is not null)
-                    {
-                        errorResult.Messages = e.ErrorMessages;
-                    }
+                response.StatusCode = errorResult.StatusCode = StatusCodes.Status503ServiceUnavailable;
+                errorResult.Messages = new List<string>
+                {
+                    "Servicio de base de datos no disponible. Inténtalo de nuevo más tarde."
+                };
+            }
+            else
+            {
+                // 4) Resto de tu switch habitual
+                switch (exception)
+                {
+                    case CustomException ce:
+                        response.StatusCode = errorResult.StatusCode = (int)ce.StatusCode;
+                        if (ce.ErrorMessages is not null)
+                            errorResult.Messages = ce.ErrorMessages;
+                        break;
 
-                    break;
+                    case KeyNotFoundException:
+                        response.StatusCode = errorResult.StatusCode = (int)HttpStatusCode.NotFound;
+                        break;
 
-                case KeyNotFoundException:
-                    response.StatusCode = errorResult.StatusCode = (int)HttpStatusCode.NotFound;
-                    break;
-
-                default:
-                    response.StatusCode = errorResult.StatusCode = (int)HttpStatusCode.InternalServerError;
-                    break;
+                    default:
+                        response.StatusCode = errorResult.StatusCode = (int)HttpStatusCode.InternalServerError;
+                        break;
+                }
             }
 
             var result = JsonSerializer.Serialize(errorResult);

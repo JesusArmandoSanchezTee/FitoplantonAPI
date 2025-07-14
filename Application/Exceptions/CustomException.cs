@@ -1,6 +1,6 @@
 using System.Net;
 
-namespace ApplicationCore.Exceptions
+namespace Application.Exceptions
 {
     public class CustomException : Exception
     {
