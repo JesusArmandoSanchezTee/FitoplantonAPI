@@ -28,38 +28,7 @@ Construida con ASP.NET Core, MySQL y aprovechando MediatR, FluentValidation y el
 
 ---
 
-## 🏗 Arquitectura y Estructura de Carpetas
-
-```text
-FitoplantonAPI/
-│
-├─ src/
-│   ├─ Application/        ← Lógica de negocio, Handlers CQRS, DTOs, Interfaces
-│   │   ├─ Behaviours      ← Behaviors de MediatR (Validación, Logging…)
-│   │   ├─ DTOs            ← Modelos de petición/respuesta
-│   │   ├─ Exceptions      ← Excepciones personalizadas
-│   │   ├─ Features        ← Commands, Queries y Handlers
-│   │   ├─ Interfaces      ← IRepositoryAsync<T>, otros contratos
-│   │   ├─ Wrappers        ← Response<T>, estructuras de resultado
-│   │   └─ ServiceExtensions.cs ← Extensión para registrar servicios DI
-│   │
-│   ├─ Domain/             ← Entidades y contratos del dominio
-│   │   ├─ Entities        ← Entidades (Phytoplankton, Classification…)
-│   │   └─ Contracts       ← Interfaces de dominio (si aplica)
-│   │
-│   ├─ Infrastructure/     ← Implementaciones concretas, EF Core, repositorios
-│   │   ├─ Persistence/    ← DbContext, migrations, repositorios EF
-│   │   └─ ServiceExtensions.cs ← Extensión para registrar DI de Infrastructure
-│   │
-│   └─ Host/               ← Proyecto ASP.NET Core Web API
-│       ├─ Controllers     ← Controladores (delgados, llaman a MediatR)
-│       ├─ Middlewares     ← Manejo de excepciones, logging, etc.
-│       ├─ appsettings.json← Configuración (ConnectionStrings, Logging…)
-│       └─ Program.cs      ← Punto de entrada, configuración de DI y pipeline
-└─ FitoplantonAPI.sln
-
-
-##  Configurar 
+## 📋 Configurar 
 
 Configura la cadena de conexión en appsettings.json:
 
@@ -90,3 +59,36 @@ Configura la cadena de conexión en appsettings.json:
 - Repository: IRepositoryAsync<T> para abstracción de EF Core
 
 - Response Wrapper: Response<T> para respuestas uniformes
+
+---
+
+## 🏗 Arquitectura y Estructura de Carpetas
+
+```text
+FitoplantonAPI/
+│
+├─ src/
+│   ├─ Application/        ← Lógica de negocio, Handlers CQRS, DTOs, Interfaces
+│   │   ├─ Behaviours      ← Behaviors de MediatR (Validación, Logging…)
+│   │   ├─ DTOs            ← Modelos de petición/respuesta
+│   │   ├─ Exceptions      ← Excepciones personalizadas
+│   │   ├─ Features        ← Commands, Queries y Handlers
+│   │   ├─ Interfaces      ← IRepositoryAsync<T>, otros contratos
+│   │   ├─ Wrappers        ← Response<T>, estructuras de resultado
+│   │   └─ ServiceExtensions.cs ← Extensión para registrar servicios DI
+│   │
+│   ├─ Domain/             ← Entidades y contratos del dominio
+│   │   ├─ Entities        ← Entidades (Phytoplankton, Classification…)
+│   │   └─ Contracts       ← Interfaces de dominio (si aplica)
+│   │
+│   ├─ Infrastructure/     ← Implementaciones concretas, EF Core, repositorios
+│   │   ├─ Persistence/    ← DbContext, migrations, repositorios EF
+│   │   └─ ServiceExtensions.cs ← Extensión para registrar DI de Infrastructure
+│   │
+│   └─ Host/               ← Proyecto ASP.NET Core Web API
+│       ├─ Controllers     ← Controladores (delgados, llaman a MediatR)
+│       ├─ Middlewares     ← Manejo de excepciones, logging, etc.
+│       ├─ appsettings.json← Configuración (ConnectionStrings, Logging…)
+│       └─ Program.cs      ← Punto de entrada, configuración de DI y pipeline
+└─ FitoplantonAPI.sln
+
