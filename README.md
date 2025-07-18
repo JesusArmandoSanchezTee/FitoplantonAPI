@@ -87,12 +87,13 @@ Configura la cadena de conexión en appsettings.json:
 
 ## 🗂 Estructura del Proyecto
 
-Proyecto	                   Responsabilidad
+| Proyecto       | Responsabilidad                                          |
+| -------------- | -------------------------------------------------------- |
+| Application    | Handlers CQRS, DTOs, validaciones, interfaces            |
+| Domain         | Entidades de negocio y contratos de dominio              |
+| Infrastructure | DbContext, repositorios EF, migrations, implementaciones |
+| Host           | Controladores, middlewares, configuración ASP.NET Core   |
 
-Application	                 Handlers CQRS, DTOs, validaciones, interfaces
-Domain	                     Entidades de negocio y contratos de dominio
-Infrastructure	             DbContext, repositorios EF, migrations, implementaciones
-Host	                       Controladores, middlewares, configuración ASP.NET Core
 
 
 ## 🔑 Patrones y Librerías Clave
