@@ -5,25 +5,6 @@ Construida con ASP.NET Core, MySQL y aprovechando MediatR, FluentValidation y el
 
 ---
 
-## 📋 Índice
-
-1. [Características](#-características)  
-2. [Tecnologías](#-tecnologías)  
-3. [Arquitectura y Estructura de Carpetas](#-arquitectura-y-estructura-de-carpetas)  
-4. [Cómo Empezar](#-cómo-empezar)  
-   - [Requisitos Previos](#requisitos-previos)  
-   - [Clonar y Configurar](#clonar-y-configurar)  
-   - [Configurar Base de Datos & Migraciones](#configurar-base-de-datos--migraciones)  
-   - [Ejecutar la API](#ejecutar-la-api)  
-5. [Estructura del Proyecto](#-estructura-del-proyecto)  
-6. [Patrones y Librerías Clave](#-patrones-y-librerías-clave)  
-7. [Uso](#-uso)  
-   - [Endpoints de Ejemplo](#endpoints-de-ejemplo)  
-8. [Contribuir](#-contribuir)  
-9. [Licencia](#-licencia)
-
----
-
 ## 🚀 Características
 
 - **CRUD** para especies de fitoplancton y sus clasificaciones  
@@ -49,34 +30,36 @@ Construida con ASP.NET Core, MySQL y aprovechando MediatR, FluentValidation y el
 
 ## 🏗 Arquitectura y Estructura de Carpetas
 
+```text
 FitoplantonAPI/
 │
 ├─ src/
-│ ├─ Application/ ← Lógica de negocio, Handlers CQRS, DTOs, Interfaces
-│ │ ├─ Behaviours ← Behaviors de MediatR (Validación, Logging…)
-│ │ ├─ DTOs ← Modelos de petición/respuesta
-│ │ ├─ Exceptions ← Excepciones personalizadas
-│ │ ├─ Features ← Commands, Queries y Handlers
-│ │ ├─ Interfaces ← IRepositoryAsync<T>, otros contratos
-│ │ ├─ Wrappers ← Response<T>, estructuras de resultado
-│ │ └─ ServiceExtensions.cs ← Extensión para registrar servicios DI
-│ │
-│ ├─ Domain/ ← Entidades y contratos del dominio
-│ │ ├─ Entities ← Entidades (Phytoplankton, Classification…)
-│ │ └─ Contracts ← Interfaces de dominio (si aplica)
-│ │
-│ ├─ Infrastructure/ ← Implementaciones concretas, EF Core, repositorios
-│ │ ├─ Persistence/ ← DbContext, migrations, repositorios EF
-│ │ └─ ServiceExtensions.cs ← Extensión para registrar DI de Infrastructure
-│ │
-│ └─ Host/ ← Proyecto ASP.NET Core Web API
-│ ├─ Controllers ← Controladores (delgados, llaman a MediatR)
-│ ├─ Middlewares ← Manejo de excepciones, logging, etc.
-│ ├─ appsettings.json ← Configuración (ConnectionStrings, Logging…)
-│ └─ Program.cs ← Punto de entrada, configuración de DI y pipeline
+│   ├─ Application/        ← Lógica de negocio, Handlers CQRS, DTOs, Interfaces
+│   │   ├─ Behaviours      ← Behaviors de MediatR (Validación, Logging…)
+│   │   ├─ DTOs            ← Modelos de petición/respuesta
+│   │   ├─ Exceptions      ← Excepciones personalizadas
+│   │   ├─ Features        ← Commands, Queries y Handlers
+│   │   ├─ Interfaces      ← IRepositoryAsync<T>, otros contratos
+│   │   ├─ Wrappers        ← Response<T>, estructuras de resultado
+│   │   └─ ServiceExtensions.cs ← Extensión para registrar servicios DI
+│   │
+│   ├─ Domain/             ← Entidades y contratos del dominio
+│   │   ├─ Entities        ← Entidades (Phytoplankton, Classification…)
+│   │   └─ Contracts       ← Interfaces de dominio (si aplica)
+│   │
+│   ├─ Infrastructure/     ← Implementaciones concretas, EF Core, repositorios
+│   │   ├─ Persistence/    ← DbContext, migrations, repositorios EF
+│   │   └─ ServiceExtensions.cs ← Extensión para registrar DI de Infrastructure
+│   │
+│   └─ Host/               ← Proyecto ASP.NET Core Web API
+│       ├─ Controllers     ← Controladores (delgados, llaman a MediatR)
+│       ├─ Middlewares     ← Manejo de excepciones, logging, etc.
+│       ├─ appsettings.json← Configuración (ConnectionStrings, Logging…)
+│       └─ Program.cs      ← Punto de entrada, configuración de DI y pipeline
 └─ FitoplantonAPI.sln
 
-### Configurar 
+
+##  Configurar 
 
 Configura la cadena de conexión en appsettings.json:
 
